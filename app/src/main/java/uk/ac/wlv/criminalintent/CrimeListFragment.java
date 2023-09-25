@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,23 +26,39 @@ public class CrimeListFragment extends Fragment{
         updateUI();
         return view;
     }
+    @Override
+    public void onResume(){
+        super.onResume();
+        updateUI();
+    }
     private void updateUI(){
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null){
+            mAdapter = new CrimeAdapter(crimes);
+            mCrimeRecyclerView.setAdapter(mAdapter);
+        }
+        else {
+            mAdapter.notifyDataSetChanged();
+        }
     }
-    private class CrimeHolder extends RecyclerView.ViewHolder{
+    private class CrimeHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         private TextView mTitileTextView;
         private TextView mDateTextView;
         private CheckBox mSolvedCheckBox;
         private Crime mCrime;
         public CrimeHolder (View itemView){
             super(itemView);
+            itemView.setOnClickListener(this);
             mTitileTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
             mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
         }
+        public void onClick(View v) {
+            Intent intent = CrimeActivity.newIntent(getActivity(), mCrime.getId());
+            startActivity(intent);
+        }
+
         public void bindCrime(Crime crime){
             mCrime = crime;
             mTitileTextView.setText(mCrime.getTitle());
