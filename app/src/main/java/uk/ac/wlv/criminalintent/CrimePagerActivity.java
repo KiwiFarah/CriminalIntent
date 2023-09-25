@@ -45,5 +45,12 @@ public class CrimePagerActivity extends FragmentActivity {
                 return mCrimes.size();
             }
         });
+        // Find the index of the crime with the given UUID
+        for (int i = 0; i < mCrimes.size(); i++) {
+            if (mCrimes.get(i).getId().equals(crimeId)) {
+                mViewPager.setCurrentItem(i); // Set the ViewPager to start at this index
+                break;
+            }
+        }
     }
 }
