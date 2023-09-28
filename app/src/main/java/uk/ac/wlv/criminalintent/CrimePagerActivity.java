@@ -3,7 +3,7 @@ package uk.ac.wlv.criminalintent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -14,7 +14,7 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends FragmentActivity {
+public class CrimePagerActivity extends AppCompatActivity {
     private static final String EXTRA_CRIME_ID = "uk.ac.wlv.criminalintent.crime_id";
     private ViewPager mViewPager;
     private List<Crime> mCrimes;
@@ -45,10 +45,10 @@ public class CrimePagerActivity extends FragmentActivity {
                 return mCrimes.size();
             }
         });
-        // Find the index of the crime with the given UUID
+
         for (int i = 0; i < mCrimes.size(); i++) {
             if (mCrimes.get(i).getId().equals(crimeId)) {
-                mViewPager.setCurrentItem(i); // Set the ViewPager to start at this index
+                mViewPager.setCurrentItem(i);
                 break;
             }
         }

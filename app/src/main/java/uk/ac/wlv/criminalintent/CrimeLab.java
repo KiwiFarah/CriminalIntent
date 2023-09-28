@@ -29,6 +29,9 @@ public class CrimeLab {
     public List<Crime> getCrimes(){
         return mCrimes;
     }
+   public void addCrime(Crime c){
+        mCrimes.add(c);
+   }
     public Crime getCrime(UUID id){
         for (Crime crime:mCrimes){
             if(crime.getId().equals(id)){
