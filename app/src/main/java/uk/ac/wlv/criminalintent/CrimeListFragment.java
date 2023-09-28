@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -90,12 +91,22 @@ public class CrimeListFragment extends Fragment{
             startActivity(intent);
         }
 
-        public void bindCrime(Crime crime){
+        public void bindCrime(Crime crime) {
             mCrime = crime;
             mTitileTextView.setText(mCrime.getTitle());
             mDateTextView.setText(mCrime.getDate().toString());
+
+            mSolvedCheckBox.setOnCheckedChangeListener(null);
+
             mSolvedCheckBox.setChecked(mCrime.isSolved());
 
+            mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    mCrime.setSolved(isChecked);
+                    CrimeLab.get(getActivity()).updateCrime(mCrime);
+                }
+            });
         }
 
     }

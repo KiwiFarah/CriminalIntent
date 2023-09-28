@@ -84,14 +84,22 @@ public class CrimeFragment extends Fragment {
                 dialog.setTargetFragment(CrimeFragment.this, REQUEST_DATE);
                 dialog.show(manager, DIALOG_DATE);
             }
-        });
-
-        mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
+        });mSolvedCheckBox = (CheckBox) v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
         mSolvedCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 mCrime.setSolved(isChecked);
+            }
+        });
+
+        Button mDeleteButton = (Button) v.findViewById(R.id.crime_delete);
+        mDeleteButton.setBackgroundColor(android.graphics.Color.RED);
+        mDeleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CrimeLab.get(getActivity()).deleteCrime(mCrime);
+                getActivity().finish();
             }
         });
 
