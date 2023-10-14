@@ -9,6 +9,7 @@ import java.util.UUID;
 import uk.ac.wlv.criminalintent.database.CrimeBaseHelper;
 import uk.ac.wlv.criminalintent.database.CrimeCursorWrapper;
 import uk.ac.wlv.criminalintent.database.CrimeDbSchema;
+import java.io.File;
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
     private List<Crime> mCrimes;
@@ -24,6 +25,10 @@ public class CrimeLab {
         mCrimes = new ArrayList<>();
         mContext = context.getApplicationContext();
         mDatabase = new CrimeBaseHelper(mContext).getWritableDatabase();
+    }
+    public File getPhotoFile(Crime crime){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir, crime.getPhotoFilename());
     }
     public List<Crime> getCrimes() {
         List<Crime> crimes = new ArrayList<>();
